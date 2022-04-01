@@ -1,0 +1,95 @@
+{
+	"common": {
+		"name": "samsung_2022_tv_adapter",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Samsung 2022 TV",
+		"titleLang": {
+			"en": "Samsung 2022 TV",
+			"de": "Samsung Fernseher 2022",
+			"ru": "телевизор самсунг 2022",
+			"pt": "TV Samsung 2022",
+			"nl": "Samsung 2022-tv",
+			"fr": "Téléviseur Samsung 2022",
+			"it": "TV Samsung 2022",
+			"es": "Televisor Samsung 2022",
+			"pl": "Telewizor Samsung 2022",
+			"zh-cn": "三星2022电视"
+		},
+		"desc": {
+			"en": "An new adapter for samsung tv",
+			"de": "Ein neuer Adapter für Samsung TV",
+			"ru": "Новый адаптер для телевизора самсунг.",
+			"pt": "Um novo adaptador para tv samsung",
+			"nl": "Een nieuwe adapter voor Samsung TV",
+			"fr": "Un nouvel adaptateur pour Samsung TV",
+			"it": "Un nuovo adattatore per tv samsung",
+			"es": "Un nuevo adaptador para samsung tv",
+			"pl": "Nowy adapter do telewizora Samsung",
+			"zh-cn": "三星电视的新适配器"
+		},
+		"authors": ["Martin Gasse <martin.gasse@gmail.com>"],
+		"keywords": ["samsung", "tv", "remote"],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "samsung_2022_tv_adapter.jpg",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Marinek/ioBroker.samsung_2022_tv_adapter/main/admin/samsung_2022_tv_adapter.jpg",
+		"readme": "https://github.com/Marinek/ioBroker.samsung_2022_tv_adapter/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "multimedia",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"materialize": true,
+		"supportCustoms": true,
+		"dependencies": [
+			{
+				"js-controller": ">=2.0.0"
+			}
+		]
+	},
+	"native": {
+		"IP": "192.168.1.0",
+		"MAC": "54:3A:D6:DD:F7:78"
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}
