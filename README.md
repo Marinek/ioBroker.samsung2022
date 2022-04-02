@@ -4,7 +4,6 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.samsung_2022_tv_adapter.svg)](https://www.npmjs.com/package/iobroker.samsung_2022_tv_adapter)
 ![Number of Installations](https://iobroker.live/badges/samsung_2022_tv_adapter-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/samsung_2022_tv_adapter-stable.svg)
-[![Dependency Status](https://img.shields.io/david/Marinek/iobroker.samsung_2022_tv_adapter.svg)](https://david-dm.org/Marinek/iobroker.samsung_2022_tv_adapter)
 
 [![NPM](https://nodei.co/npm/iobroker.samsung_2022_tv_adapter.png?downloads=true)](https://nodei.co/npm/iobroker.samsung_2022_tv_adapter/)
 
