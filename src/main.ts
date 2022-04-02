@@ -8,6 +8,8 @@ import * as utils from "@iobroker/adapter-core";
 import Samsung, { KEYS } from "samsung-tv-control";
 
 class Samsung2022TvAdapter extends utils.Adapter {
+	private control: Samsung | undefined;
+
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
@@ -15,7 +17,6 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		});
 		this.on("ready", this.onReady.bind(this));
 		this.on("stateChange", this.onStateChange.bind(this));
-		// this.on("objectChange", this.onObjectChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 	}
@@ -35,7 +36,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		this.log.info("config MAC: " + this.config.MAC);
 
 		const config = {
-			debug: true, // Default: false
+			debug: false, // Default: false
 			ip: this.config.IP,
 			mac: this.config.MAC,
 			nameApp: "Adapter Remote", // Default: NodeJS
@@ -44,65 +45,43 @@ class Samsung2022TvAdapter extends utils.Adapter {
 			saveToken: false,
 		};
 
-		const control = new Samsung(config);
+		this.control = new Samsung(config);
 
-		control.turnOn();
+		for (const keyName in KEYS) {
+			this.createState(
+				"Remote",
+				"",
+				keyName,
+				{
+					role: "button.press",
+					write: true,
+					def: false,
+					type: "boolean",
+					dontDelete: true,
+				},
+				undefined,
+			);
+		}
 
-		control
-			.isAvailable()
-			.then(() => {
-				// Send key to TV
-				control.sendKey(KEYS.KEY_POWER, function (err, res) {
-					if (err) {
-						//throw new Error();
-					} else {
-						console.log(res);
-					}
-				});
-
-				// Control will keep connection for next messages in 1 minute
-				// If you would like to close it immediately, you can use `closeConnection()`
-				control.closeConnection();
-			})
-			.catch((e) => console.error(e));
-
-		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
-		await this.setObjectNotExistsAsync("testVariable", {
-			type: "state",
-			common: {
-				name: "testVariable",
-				type: "boolean",
-				role: "indicator",
-				read: true,
+		this.createState(
+			"TV",
+			"",
+			"on",
+			{
+				role: "switch",
 				write: true,
+				read: true,
+				def: false,
+				type: "boolean",
+				dontDelete: true,
 			},
-			native: {},
-		});
+			undefined,
+		);
+		this.setState("TV.on", false, true);
+		this.subscribeStates("*");
 
 		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("testVariable");
-		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		// this.subscribeStates("lights.*");
-		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-		// this.subscribeStates("*");
-
-		/*
-			setState examples
-			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-		*/
-		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync("testVariable", true);
-
-		// same thing, but the value is flagged "ack"
-		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync("testVariable", { val: true, ack: true });
-
-		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
+		this.setState("info.connection", true, true);
 
 		// examples for the checkPassword/checkGroup functions
 		let result = await this.checkPasswordAsync("admin", "iobroker");
@@ -117,32 +96,11 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	 */
 	private onUnload(callback: () => void): void {
 		try {
-			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
-			// ...
-			// clearInterval(interval1);
-
 			callback();
 		} catch (e) {
 			callback();
 		}
 	}
-
-	// If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-	// You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-	// /**
-	//  * Is called if a subscribed object changes
-	//  */
-	// private onObjectChange(id: string, obj: ioBroker.Object | null | undefined): void {
-	// 	if (obj) {
-	// 		// The object was changed
-	// 		this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-	// 	} else {
-	// 		// The object was deleted
-	// 		this.log.info(`object ${id} deleted`);
-	// 	}
-	// }
 
 	/**
 	 * Is called if a subscribed state changes
@@ -150,29 +108,54 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
 		if (state) {
 			// The state was changed
-			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
+
+			const keyName = id.split(".")[3];
+
+			if (this.control == undefined) {
+				return;
+			}
+
+			const isAviable = this.control.isAvailable().catch(() => {
+				this.log.info("TV seems to be offline");
+			});
+
+			if (!isAviable) {
+				if (keyName == "on") {
+					this.control.turnOn();
+				} else {
+					return;
+				}
+			}
+
+			this.control
+				.isAvailable()
+				.then(() => {
+					const enumKeyName: KEYS = KEYS[keyName as keyof typeof KEYS];
+
+					if (this.control == undefined) {
+						return;
+					}
+
+					// Send key to TV
+					this.control.sendKey(enumKeyName, function (err, res) {
+						if (err) {
+							//throw new Error();
+						} else {
+							console.log(res);
+						}
+					});
+
+					// Control will keep connection for next messages in 1 minute
+					// If you would like to close it immediately, you can use `closeConnection()`
+					this.control.closeConnection();
+				})
+				.catch((e) => console.error(e));
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
 		}
 	}
-
-	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-	// /**
-	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-	//  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-	//  */
-	// private onMessage(obj: ioBroker.Message): void {
-	// 	if (typeof obj === "object" && obj.message) {
-	// 		if (obj.command === "send") {
-	// 			// e.g. send email or pushover or whatever
-	// 			this.log.info("send command");
-
-	// 			// Send response in callback if required
-	// 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
-	// 		}
-	// 	}
-	// }
 }
 
 if (require.main !== module) {
