@@ -5,9 +5,7 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 import * as utils from "@iobroker/adapter-core";
-
-// Load your modules here, e.g.:
-// import * as fs from "fs";
+import Samsung, { KEYS } from "samsung-tv-control";
 
 class Samsung2022TvAdapter extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -35,6 +33,38 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		// this.config:
 		this.log.info("config IP: " + this.config.IP);
 		this.log.info("config MAC: " + this.config.MAC);
+
+		const config = {
+			debug: true, // Default: false
+			ip: this.config.IP,
+			mac: this.config.MAC,
+			nameApp: "Adapter Remote", // Default: NodeJS
+			port: 8002, // Default: 8002
+			token: "11255133",
+			saveToken: false,
+		};
+
+		const control = new Samsung(config);
+
+		control.turnOn();
+
+		control
+			.isAvailable()
+			.then(() => {
+				// Send key to TV
+				control.sendKey(KEYS.KEY_POWER, function (err, res) {
+					if (err) {
+						//throw new Error();
+					} else {
+						console.log(res);
+					}
+				});
+
+				// Control will keep connection for next messages in 1 minute
+				// If you would like to close it immediately, you can use `closeConnection()`
+				control.closeConnection();
+			})
+			.catch((e) => console.error(e));
 
 		/*
 		For every state in the system there has to be also an object of type state

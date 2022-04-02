@@ -26,7 +26,9 @@
     "url": "https://github.com/Marinek/ioBroker.samsung_2022_tv_adapter"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.0"
+    "@iobroker/adapter-core": "^2.6.0",
+    "samsung-tv-control": "^1.12.3",
+    "wol": "^1.0.7"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.6",
