@@ -31,7 +31,7 @@
 		// "noUnusedParameters": true,
 		// Uncomment this if you want the old behavior of catch variables being `any`
 		// "useUnknownInCatchVariables": false,
-
+		"jsx": "react",
 		// Consider targetting es2019 or higher if you only support Node.js 12+
 		"target": "es2018",
 

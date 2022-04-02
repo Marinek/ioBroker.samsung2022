@@ -129,9 +129,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 	render() {
 		return (
 			<form className={this.props.classes.tab}>
-				{this.renderInput("IP adress of the samsung tv", "IP", "text")}
+				{this.renderInput("IP", "IP", "text")}
 				<br />
-				{this.renderInput("MAC adress of the samsung tv", "MAC", "text")}
+				{this.renderInput("MAC", "MAC", "text")}
 			</form>
 		);
 	}
