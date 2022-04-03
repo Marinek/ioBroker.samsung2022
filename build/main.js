@@ -91,19 +91,28 @@ class Samsung2022TvAdapter extends utils.Adapter {
     if (state) {
       this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
       const keyName = id.split(".")[3];
+      if (!keyName) {
+        this.log.warn("No keyname found!");
+        return;
+      } else {
+        this.log.info(`found keyname: '${keyName}'`);
+      }
       if (this.control == void 0) {
         return;
       }
-      const isAviable = this.control.isAvailable().catch(() => {
-        this.log.info("TV seems to be offline");
-      });
-      if (!isAviable) {
-        if (keyName == "on") {
-          this.control.turnOn();
+      this.control.isAvailable().then((value) => {
+        this.log.info(`TV aviable: '${value}'`);
+      }).catch((error) => {
+        this.log.info("TV seems to be offline" + error);
+        if (keyName === "on") {
+          this.log.info("Sending WOL to wake up the TV.");
+          if (this.control) {
+            this.control.turnOn();
+          }
         } else {
-          return;
+          this.log.info("TV is offline, doing nothing.");
         }
-      }
+      });
       this.control.isAvailable().then(() => {
         const enumKeyName = import_samsung_tv_control.KEYS[keyName];
         if (this.control == void 0) {
