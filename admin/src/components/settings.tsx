@@ -132,6 +132,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 				{this.renderInput("IP", "IP", "text")}
 				<br />
 				{this.renderInput("MAC", "MAC", "text")}
+				<br />
+				{this.renderInput("TOKEN", "TOKEN", "text")}
 			</form>
 		);
 	}

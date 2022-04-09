@@ -6,6 +6,7 @@ declare global {
 		interface AdapterConfig {
 			IP: string;
 			MAC: string;
+			TOKEN: int;
 		}
 	}
 }

@@ -45,16 +45,21 @@ class Samsung2022TvAdapter extends utils.Adapter {
     this.setState("info.connection", false, true);
     this.log.info("config IP: " + this.config.IP);
     this.log.info("config MAC: " + this.config.MAC);
+    this.log.debug("config TOKEN: " + this.config.TOKEN);
     const config = {
       debug: false,
       ip: this.config.IP,
       mac: this.config.MAC,
       nameApp: "Adapter Remote",
       port: 8002,
-      token: "11255133",
+      token: this.config.TOKEN,
       saveToken: false
     };
     this.control = new import_samsung_tv_control.default(config);
+    if (!this.config.TOKEN || this.config.TOKEN === "") {
+      this.firstInit();
+      return;
+    }
     for (const keyName in import_samsung_tv_control.KEYS) {
       this.createState("Remote", "", keyName, {
         role: "button.press",
@@ -79,6 +84,25 @@ class Samsung2022TvAdapter extends utils.Adapter {
     this.log.info("check user admin pw iobroker: " + result);
     result = await this.checkGroupAsync("admin", "admin");
     this.log.info("check group user admin group admin: " + result);
+  }
+  firstInit() {
+    if (this.control == null) {
+      return;
+    }
+    this.control.turnOn();
+    this.control.isAvailable().then(() => {
+      if (this.control == null) {
+        return;
+      }
+      this.log.debug("Attempting to get an token from tv...");
+      this.control.getToken((token) => {
+        this.log.debug("# Response getToken:" + token);
+        this.config.TOKEN = token;
+        this.updateConfig(this.config);
+        return;
+      });
+      return;
+    });
   }
   onUnload(callback) {
     try {
@@ -106,7 +130,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
         this.log.info("TV seems to be offline" + error);
         if (keyName === "on") {
           this.log.info("Sending WOL to wake up the TV.");
-          if (this.control) {
+          if (this.control && state.val) {
             this.control.turnOn();
           }
         } else {
@@ -125,7 +149,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
           }
         });
         this.control.closeConnection();
-      }).catch((e) => console.error(e));
+      }).catch((e) => this.log.error(e));
     } else {
       this.log.info(`state ${id} deleted`);
     }

@@ -34,6 +34,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		// this.config:
 		this.log.info("config IP: " + this.config.IP);
 		this.log.info("config MAC: " + this.config.MAC);
+		this.log.debug("config TOKEN: " + this.config.TOKEN);
 
 		const config = {
 			debug: false, // Default: false
@@ -41,11 +42,16 @@ class Samsung2022TvAdapter extends utils.Adapter {
 			mac: this.config.MAC,
 			nameApp: "Adapter Remote", // Default: NodeJS
 			port: 8002, // Default: 8002
-			token: "11255133",
+			token: this.config.TOKEN,
 			saveToken: false,
 		};
 
 		this.control = new Samsung(config);
+
+		if (!this.config.TOKEN || this.config.TOKEN === "") {
+			this.firstInit();
+			return;
+		}
 
 		for (const keyName in KEYS) {
 			this.createState(
@@ -92,6 +98,35 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	}
 
 	/**
+	 * Is called when adapter is started for the first time. It will start negotiating
+	 * the access token for the configured TV.
+	 */
+	private firstInit(): void {
+		if (this.control == null) {
+			return;
+		}
+
+		this.control.turnOn();
+
+		this.control.isAvailable().then(() => {
+			if (this.control == null) {
+				return;
+			}
+
+			this.log.debug("Attempting to get an token from tv...");
+
+			this.control.getToken((token) => {
+				this.log.debug("# Response getToken:" + token);
+
+				this.config.TOKEN = token;
+				this.updateConfig(this.config);
+				return;
+			});
+			return;
+		});
+	}
+
+	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
 	 */
 	private onUnload(callback: () => void): void {
@@ -111,6 +146,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
 
 			const keyName = id.split(".")[3];
+
 			if (!keyName) {
 				this.log.warn("No keyname found!");
 				return;
@@ -131,7 +167,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 					this.log.info("TV seems to be offline" + error);
 					if (keyName === "on") {
 						this.log.info("Sending WOL to wake up the TV.");
-						if (this.control) {
+						if (this.control && state.val) {
 							this.control.turnOn();
 						}
 					} else {
@@ -161,7 +197,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 					// If you would like to close it immediately, you can use `closeConnection()`
 					this.control.closeConnection();
 				})
-				.catch((e) => console.error(e));
+				.catch((e) => this.log.error(e));
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
