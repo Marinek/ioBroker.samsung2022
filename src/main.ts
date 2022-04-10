@@ -10,6 +10,9 @@ import Samsung, { KEYS } from "samsung-tv-control";
 class Samsung2022TvAdapter extends utils.Adapter {
 	private control: Samsung | undefined;
 
+	private refreshTimeout: NodeJS.Timeout | undefined;
+	private refreshIntervalInMinutes = 1;
+
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
@@ -86,15 +89,37 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		this.setState("TV.on", false, true);
 		this.subscribeStates("*");
 
-		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.setState("info.connection", true, true);
+		this.onRefreshTimeout();
+	}
 
-		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + result);
+	private setupRefreshTimeout(): void {
+		this.log.debug("Setting up refresh timeout to " + this.refreshIntervalInMinutes);
 
-		result = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + result);
+		const refreshIntervalInMilliseconds = this.refreshIntervalInMinutes * 60 * 1000;
+		this.refreshTimeout = setTimeout(this.onRefreshTimeout.bind(this), refreshIntervalInMilliseconds);
+	}
+
+	private async onRefreshTimeout(): Promise<void> {
+		this.log.debug(`refreshTimeoutFunc started triggered`);
+
+		await this.control
+			?.isAvailable()
+			.then(() => {
+				this.getState("info.connection", (error, state) => {
+					this.log.debug("GOT STATE: " + JSON.stringify(state));
+
+					if (!state?.val) {
+						this.setState("info.connection", true, true);
+						this.setState("TV.on", true, true);
+					}
+				});
+			})
+			.catch(() => {
+				this.setState("TV.on", false, true);
+				this.setState("info.connection", false, true);
+			});
+
+		this.setupRefreshTimeout();
 	}
 
 	/**
@@ -102,20 +127,12 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	 * the access token for the configured TV.
 	 */
 	private firstInit(): void {
-		if (this.control == null) {
-			return;
-		}
+		this.control?.turnOn();
 
-		this.control.turnOn();
-
-		this.control.isAvailable().then(() => {
-			if (this.control == null) {
-				return;
-			}
-
+		this.control?.isAvailable().then(() => {
 			this.log.debug("Attempting to get an token from tv...");
 
-			this.control.getToken((token) => {
+			this.control?.getToken((token) => {
 				this.log.debug("# Response getToken:" + token);
 
 				this.config.TOKEN = token;
@@ -131,6 +148,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	 */
 	private onUnload(callback: () => void): void {
 		try {
+			if (this.refreshTimeout) clearTimeout(this.refreshTimeout);
+
 			callback();
 		} catch (e) {
 			callback();
@@ -145,6 +164,12 @@ class Samsung2022TvAdapter extends utils.Adapter {
 			// The state was changed
 			this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
 
+			// For now: Ignore changes to the state, that are send from this adapter.
+			if (state.from == "system.adapter." + this.namespace) {
+				this.log.debug("Ignoring that event, because it is send from this adapter.");
+				return;
+			}
+
 			const keyName = id.split(".")[3];
 
 			if (!keyName) {
@@ -154,7 +179,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 				this.log.info(`found keyname: '${keyName}'`);
 			}
 
-			if (this.control == undefined) {
+			if (!this.control) {
 				return;
 			}
 
@@ -166,8 +191,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
 				.catch((error) => {
 					this.log.info("TV seems to be offline" + error);
 					if (keyName === "on") {
-						this.log.info("Sending WOL to wake up the TV.");
 						if (this.control && state.val) {
+							this.log.info("Sending WOL to wake up the TV.");
 							this.control.turnOn();
 						}
 					} else {
@@ -180,12 +205,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
 				.then(() => {
 					const enumKeyName: KEYS = KEYS[keyName as keyof typeof KEYS];
 
-					if (this.control == undefined) {
-						return;
-					}
-
 					// Send key to TV
-					this.control.sendKey(enumKeyName, function (err, res) {
+					this.control?.sendKey(enumKeyName, function (err, res) {
 						if (err) {
 							//throw new Error();
 						} else {
@@ -195,7 +216,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 
 					// Control will keep connection for next messages in 1 minute
 					// If you would like to close it immediately, you can use `closeConnection()`
-					this.control.closeConnection();
+					this.control?.closeConnection();
 				})
 				.catch((e) => this.log.error(e));
 		} else {

@@ -37,6 +37,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
     super(__spreadProps(__spreadValues({}, options), {
       name: "samsung_2022_tv_adapter"
     }));
+    this.refreshIntervalInMinutes = 1;
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
@@ -79,23 +80,37 @@ class Samsung2022TvAdapter extends utils.Adapter {
     }, void 0);
     this.setState("TV.on", false, true);
     this.subscribeStates("*");
-    this.setState("info.connection", true, true);
-    let result = await this.checkPasswordAsync("admin", "iobroker");
-    this.log.info("check user admin pw iobroker: " + result);
-    result = await this.checkGroupAsync("admin", "admin");
-    this.log.info("check group user admin group admin: " + result);
+    this.onRefreshTimeout();
+  }
+  setupRefreshTimeout() {
+    this.log.debug("Setting up refresh timeout to " + this.refreshIntervalInMinutes);
+    const refreshIntervalInMilliseconds = this.refreshIntervalInMinutes * 60 * 1e3;
+    this.refreshTimeout = setTimeout(this.onRefreshTimeout.bind(this), refreshIntervalInMilliseconds);
+  }
+  async onRefreshTimeout() {
+    var _a;
+    this.log.debug(`refreshTimeoutFunc started triggered`);
+    await ((_a = this.control) == null ? void 0 : _a.isAvailable().then(() => {
+      this.getState("info.connection", (error, state) => {
+        this.log.debug("GOT STATE: " + JSON.stringify(state));
+        if (!(state == null ? void 0 : state.val)) {
+          this.setState("info.connection", true, true);
+          this.setState("TV.on", true, true);
+        }
+      });
+    }).catch(() => {
+      this.setState("TV.on", false, true);
+      this.setState("info.connection", false, true);
+    }));
+    this.setupRefreshTimeout();
   }
   firstInit() {
-    if (this.control == null) {
-      return;
-    }
-    this.control.turnOn();
-    this.control.isAvailable().then(() => {
-      if (this.control == null) {
-        return;
-      }
+    var _a, _b;
+    (_a = this.control) == null ? void 0 : _a.turnOn();
+    (_b = this.control) == null ? void 0 : _b.isAvailable().then(() => {
+      var _a2;
       this.log.debug("Attempting to get an token from tv...");
-      this.control.getToken((token) => {
+      (_a2 = this.control) == null ? void 0 : _a2.getToken((token) => {
         this.log.debug("# Response getToken:" + token);
         this.config.TOKEN = token;
         this.updateConfig(this.config);
@@ -106,6 +121,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
   }
   onUnload(callback) {
     try {
+      if (this.refreshTimeout)
+        clearTimeout(this.refreshTimeout);
       callback();
     } catch (e) {
       callback();
@@ -114,6 +131,10 @@ class Samsung2022TvAdapter extends utils.Adapter {
   onStateChange(id, state) {
     if (state) {
       this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
+      if (state.from == "system.adapter." + this.namespace) {
+        this.log.debug("Ignoring that event, because it is send from this adapter.");
+        return;
+      }
       const keyName = id.split(".")[3];
       if (!keyName) {
         this.log.warn("No keyname found!");
@@ -121,7 +142,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
       } else {
         this.log.info(`found keyname: '${keyName}'`);
       }
-      if (this.control == void 0) {
+      if (!this.control) {
         return;
       }
       this.control.isAvailable().then((value) => {
@@ -129,8 +150,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
       }).catch((error) => {
         this.log.info("TV seems to be offline" + error);
         if (keyName === "on") {
-          this.log.info("Sending WOL to wake up the TV.");
           if (this.control && state.val) {
+            this.log.info("Sending WOL to wake up the TV.");
             this.control.turnOn();
           }
         } else {
@@ -138,17 +159,15 @@ class Samsung2022TvAdapter extends utils.Adapter {
         }
       });
       this.control.isAvailable().then(() => {
+        var _a, _b;
         const enumKeyName = import_samsung_tv_control.KEYS[keyName];
-        if (this.control == void 0) {
-          return;
-        }
-        this.control.sendKey(enumKeyName, function(err, res) {
+        (_a = this.control) == null ? void 0 : _a.sendKey(enumKeyName, function(err, res) {
           if (err) {
           } else {
             console.log(res);
           }
         });
-        this.control.closeConnection();
+        (_b = this.control) == null ? void 0 : _b.closeConnection();
       }).catch((e) => this.log.error(e));
     } else {
       this.log.info(`state ${id} deleted`);
