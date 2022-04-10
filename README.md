@@ -111,7 +111,8 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 0.1.2 (2022-04-10)
+
+### **WORK IN PROGRESS**
 
 -   updated release process
 
