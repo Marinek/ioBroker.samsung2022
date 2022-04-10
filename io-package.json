@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "samsung_2022_tv_adapter",
-		"version": "0.0.2",
+		"version": "0.0.4",
 		"news": {
 			"0.0.2": {
 				"en": "Filler ;)"
