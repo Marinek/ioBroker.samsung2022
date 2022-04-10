@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "samsung_2022_tv_adapter",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "news": {
+      "0.0.5": {
+        "en": "updated dependencys",
+        "de": "aktualisierte Abhängigkeiten",
+        "ru": "обновленные зависимости",
+        "pt": "dependências atualizadas",
+        "nl": "bijgewerkte afhankelijkheden",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zaktualizowane zależności",
+        "zh-cn": "更新的依赖项"
+      },
       "0.0.4": {
         "en": "Optaining Token is easy now. Handling TV on / off state imporved",
         "de": "Token zu erhalten ist jetzt einfach. Handhabung des TV-Ein/Aus-Zustands verbessert",
