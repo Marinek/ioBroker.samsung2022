@@ -117,6 +117,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
         return;
       });
       return;
+    }).catch((error) => {
+      this.log.error("Could not find Token, because the TV is not reachable! Check your configuration (IP / MAC!) " + error);
     });
   }
   onUnload(callback) {

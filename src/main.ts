@@ -129,18 +129,26 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	private firstInit(): void {
 		this.control?.turnOn();
 
-		this.control?.isAvailable().then(() => {
-			this.log.debug("Attempting to get an token from tv...");
+		this.control
+			?.isAvailable()
+			.then(() => {
+				this.log.debug("Attempting to get an token from tv...");
 
-			this.control?.getToken((token) => {
-				this.log.debug("# Response getToken:" + token);
+				this.control?.getToken((token) => {
+					this.log.debug("# Response getToken:" + token);
 
-				this.config.TOKEN = token;
-				this.updateConfig(this.config);
+					this.config.TOKEN = token;
+					this.updateConfig(this.config);
+					return;
+				});
 				return;
+			})
+			.catch((error) => {
+				this.log.error(
+					"Could not find Token, because the TV is not reachable! Check your configuration (IP / MAC!) " +
+						error,
+				);
 			});
-			return;
-		});
 	}
 
 	/**
