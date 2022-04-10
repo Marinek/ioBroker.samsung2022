@@ -1,5 +1,5 @@
 {
 	"dry": false,
-	"plugins": ["iobroker", "lerna"],
+	"plugins": ["package", "iobroker", "lerna"],
 	"addPlaceholder": true
 }
