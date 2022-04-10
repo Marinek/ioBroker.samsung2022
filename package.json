@@ -1,6 +1,6 @@
 {
   "name": "iobroker.samsung_2022_tv_adapter",
-  "version": "0.0.3-alpha",
+  "version": "0.0.3",
   "description": "An new adapter for samsung tv",
   "author": {
     "name": "Martin Gasse",
