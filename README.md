@@ -114,7 +114,9 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
-### 0.0.2-alpha.0 (2022-04-02)
+-   (Martin Gasse) Optaining Token is easy now. Handling TV on / off state imporved
+
+### 0.0.2 (2022-04-02)
 
 -   (Martin Gasse) initial release
 
