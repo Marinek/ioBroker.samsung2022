@@ -7,6 +7,7 @@ declare global {
 			IP: string;
 			MAC: string;
 			TOKEN: int;
+			REMOTE_NAME: string;
 		}
 	}
 }

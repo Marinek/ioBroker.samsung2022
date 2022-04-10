@@ -111,6 +111,13 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   reduced the amount of automatically starting the TV. It will reduce unwillingly starting the TV.
+-   New configuration: Remote Name - You may set the Name of the Remote.
+-   Token negotiation will now automatically repeat unil it is done. (Your TV has to be on for the setup)
+
 ### 0.1.3 (2022-04-10)
 
 -   updated release process

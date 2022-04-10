@@ -7,10 +7,13 @@
 import * as utils from "@iobroker/adapter-core";
 import Samsung, { KEYS } from "samsung-tv-control";
 
+const STATE_NAME_INFO_CONNECTION = "info.connection";
+
 class Samsung2022TvAdapter extends utils.Adapter {
 	private control: Samsung | undefined;
 
 	private refreshTimeout: NodeJS.Timeout | undefined;
+	private retryConnectionTimeout: NodeJS.Timeout | undefined;
 	private refreshIntervalInMinutes = 1;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -31,19 +34,20 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		// Initialize your adapter here
 
 		// Reset the connection indicator during startup
-		this.setState("info.connection", false, true);
+		this.setState(STATE_NAME_INFO_CONNECTION, false, true);
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
 		this.log.info("config IP: " + this.config.IP);
 		this.log.info("config MAC: " + this.config.MAC);
+		this.log.info("config REMOTE_NAME: " + this.config.REMOTE_NAME);
 		this.log.debug("config TOKEN: " + this.config.TOKEN);
 
 		const config = {
 			debug: false, // Default: false
 			ip: this.config.IP,
 			mac: this.config.MAC,
-			nameApp: "Adapter Remote", // Default: NodeJS
+			nameApp: this.config.REMOTE_NAME || "Remote Adapter", // Default: NodeJS
 			port: 8002, // Default: 8002
 			token: this.config.TOKEN,
 			saveToken: false,
@@ -105,18 +109,18 @@ class Samsung2022TvAdapter extends utils.Adapter {
 		await this.control
 			?.isAvailable()
 			.then(() => {
-				this.getState("info.connection", (error, state) => {
+				this.getState(STATE_NAME_INFO_CONNECTION, (error, state) => {
 					this.log.debug("GOT STATE: " + JSON.stringify(state));
 
 					if (!state?.val) {
-						this.setState("info.connection", true, true);
+						this.setState(STATE_NAME_INFO_CONNECTION, true, true);
 						this.setState("TV.on", true, true);
 					}
 				});
 			})
 			.catch(() => {
 				this.setState("TV.on", false, true);
-				this.setState("info.connection", false, true);
+				this.setState(STATE_NAME_INFO_CONNECTION, false, true);
 			});
 
 		this.setupRefreshTimeout();
@@ -127,12 +131,10 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	 * the access token for the configured TV.
 	 */
 	private firstInit(): void {
-		this.control?.turnOn();
-
 		this.control
 			?.isAvailable()
 			.then(() => {
-				this.log.debug("Attempting to get an token from tv...");
+				this.log.debug("Attempting to get a token from tv...");
 
 				this.control?.getToken((token) => {
 					this.log.debug("# Response getToken:" + token);
@@ -145,9 +147,12 @@ class Samsung2022TvAdapter extends utils.Adapter {
 			})
 			.catch((error) => {
 				this.log.error(
-					"Could not find Token, because the TV is not reachable! Check your configuration (IP / MAC!) " +
+					"Could not find Token, because the TV is not reachable! Check your configuration (IP / MAC!); Retrying... " +
 						error,
 				);
+
+				// Since the TV is not configured. We have to try again.
+				this.retryConnectionTimeout = setTimeout(this.onReady.bind(this), 60 * 1000);
 			});
 	}
 
@@ -157,6 +162,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	private onUnload(callback: () => void): void {
 		try {
 			if (this.refreshTimeout) clearTimeout(this.refreshTimeout);
+			if (this.retryConnectionTimeout) clearTimeout(this.retryConnectionTimeout);
 
 			callback();
 		} catch (e) {
@@ -170,7 +176,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
 		if (state) {
 			// The state was changed
-			this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
+			this.log.debug(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
 
 			// For now: Ignore changes to the state, that are send from this adapter.
 			if (state.from == "system.adapter." + this.namespace) {
@@ -184,7 +190,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 				this.log.warn("No keyname found!");
 				return;
 			} else {
-				this.log.info(`found keyname: '${keyName}'`);
+				this.log.debug(`found keyname: '${keyName}'`);
 			}
 
 			if (!this.control) {
@@ -194,17 +200,17 @@ class Samsung2022TvAdapter extends utils.Adapter {
 			this.control
 				.isAvailable()
 				.then((value) => {
-					this.log.info(`TV aviable: '${value}'`);
+					this.log.silly(`TV aviable: '${value}'`);
 				})
 				.catch((error) => {
-					this.log.info("TV seems to be offline" + error);
+					this.log.silly("TV seems to be offline" + error);
 					if (keyName === "on") {
 						if (this.control && state.val) {
 							this.log.info("Sending WOL to wake up the TV.");
 							this.control.turnOn();
 						}
 					} else {
-						this.log.info("TV is offline, doing nothing.");
+						this.log.silly("TV is offline, doing nothing.");
 					}
 				});
 

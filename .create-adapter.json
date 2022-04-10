@@ -25,6 +25,18 @@
 			"defaultValue": "192.168.1.0"
 		},
 		{
+			"key": "REMOTE_NAME",
+			"label": "The name of the remote to identify by the tv.",
+			"inputType": "text",
+			"defaultValue": "Adapter Remote"
+		},
+		{
+			"key": "TOKEN",
+			"label": "Individual token to authenticate this remote.",
+			"inputType": "text",
+			"defaultValue": null
+		},
+		{
 			"key": "MAC",
 			"label": "MAC adress of the samsung tv",
 			"inputType": "text",

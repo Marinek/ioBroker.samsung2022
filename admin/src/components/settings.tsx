@@ -133,6 +133,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 				<br />
 				{this.renderInput("MAC", "MAC", "text")}
 				<br />
+				{this.renderInput("REMOTE_NAME", "REMOTE_NAME", "text")}
+				<br />
 				{this.renderInput("TOKEN", "TOKEN", "text")}
 			</form>
 		);

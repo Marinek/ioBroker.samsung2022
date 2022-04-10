@@ -32,6 +32,7 @@ var __copyProps = (to, from, except, desc) => {
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var import_samsung_tv_control = __toESM(require("samsung-tv-control"));
+const STATE_NAME_INFO_CONNECTION = "info.connection";
 class Samsung2022TvAdapter extends utils.Adapter {
   constructor(options = {}) {
     super(__spreadProps(__spreadValues({}, options), {
@@ -43,15 +44,16 @@ class Samsung2022TvAdapter extends utils.Adapter {
     this.on("unload", this.onUnload.bind(this));
   }
   async onReady() {
-    this.setState("info.connection", false, true);
+    this.setState(STATE_NAME_INFO_CONNECTION, false, true);
     this.log.info("config IP: " + this.config.IP);
     this.log.info("config MAC: " + this.config.MAC);
+    this.log.info("config REMOTE_NAME: " + this.config.REMOTE_NAME);
     this.log.debug("config TOKEN: " + this.config.TOKEN);
     const config = {
       debug: false,
       ip: this.config.IP,
       mac: this.config.MAC,
-      nameApp: "Adapter Remote",
+      nameApp: this.config.REMOTE_NAME || "Remote Adapter",
       port: 8002,
       token: this.config.TOKEN,
       saveToken: false
@@ -91,25 +93,24 @@ class Samsung2022TvAdapter extends utils.Adapter {
     var _a;
     this.log.debug(`refreshTimeoutFunc started triggered`);
     await ((_a = this.control) == null ? void 0 : _a.isAvailable().then(() => {
-      this.getState("info.connection", (error, state) => {
+      this.getState(STATE_NAME_INFO_CONNECTION, (error, state) => {
         this.log.debug("GOT STATE: " + JSON.stringify(state));
         if (!(state == null ? void 0 : state.val)) {
-          this.setState("info.connection", true, true);
+          this.setState(STATE_NAME_INFO_CONNECTION, true, true);
           this.setState("TV.on", true, true);
         }
       });
     }).catch(() => {
       this.setState("TV.on", false, true);
-      this.setState("info.connection", false, true);
+      this.setState(STATE_NAME_INFO_CONNECTION, false, true);
     }));
     this.setupRefreshTimeout();
   }
   firstInit() {
-    var _a, _b;
-    (_a = this.control) == null ? void 0 : _a.turnOn();
-    (_b = this.control) == null ? void 0 : _b.isAvailable().then(() => {
+    var _a;
+    (_a = this.control) == null ? void 0 : _a.isAvailable().then(() => {
       var _a2;
-      this.log.debug("Attempting to get an token from tv...");
+      this.log.debug("Attempting to get a token from tv...");
       (_a2 = this.control) == null ? void 0 : _a2.getToken((token) => {
         this.log.debug("# Response getToken:" + token);
         this.config.TOKEN = token;
@@ -118,13 +119,16 @@ class Samsung2022TvAdapter extends utils.Adapter {
       });
       return;
     }).catch((error) => {
-      this.log.error("Could not find Token, because the TV is not reachable! Check your configuration (IP / MAC!) " + error);
+      this.log.error("Could not find Token, because the TV is not reachable! Check your configuration (IP / MAC!); Retrying... " + error);
+      this.retryConnectionTimeout = setTimeout(this.onReady.bind(this), 60 * 1e3);
     });
   }
   onUnload(callback) {
     try {
       if (this.refreshTimeout)
         clearTimeout(this.refreshTimeout);
+      if (this.retryConnectionTimeout)
+        clearTimeout(this.retryConnectionTimeout);
       callback();
     } catch (e) {
       callback();
@@ -132,7 +136,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
   }
   onStateChange(id, state) {
     if (state) {
-      this.log.info(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
+      this.log.debug(`state ${id} changed: ${JSON.stringify(state)} (ack = ${state.ack})`);
       if (state.from == "system.adapter." + this.namespace) {
         this.log.debug("Ignoring that event, because it is send from this adapter.");
         return;
@@ -142,22 +146,22 @@ class Samsung2022TvAdapter extends utils.Adapter {
         this.log.warn("No keyname found!");
         return;
       } else {
-        this.log.info(`found keyname: '${keyName}'`);
+        this.log.debug(`found keyname: '${keyName}'`);
       }
       if (!this.control) {
         return;
       }
       this.control.isAvailable().then((value) => {
-        this.log.info(`TV aviable: '${value}'`);
+        this.log.silly(`TV aviable: '${value}'`);
       }).catch((error) => {
-        this.log.info("TV seems to be offline" + error);
+        this.log.silly("TV seems to be offline" + error);
         if (keyName === "on") {
           if (this.control && state.val) {
             this.log.info("Sending WOL to wake up the TV.");
             this.control.turnOn();
           }
         } else {
-          this.log.info("TV is offline, doing nothing.");
+          this.log.silly("TV is offline, doing nothing.");
         }
       });
       this.control.isAvailable().then(() => {
