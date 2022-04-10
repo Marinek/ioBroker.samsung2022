@@ -112,10 +112,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	### **WORK IN PROGRESS**
 -->
 
-### 0.0.3-alpha (2022-04-10)
-
--   (Martin Gasse) Optaining the token automatically
--   (Martin Gasse) Handling TV on / off state
+### **WORK IN PROGRESS**
 
 ### 0.0.2-alpha.0 (2022-04-02)
 
