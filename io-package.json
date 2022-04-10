@@ -1,10 +1,13 @@
 {
 	"common": {
 		"name": "samsung_2022_tv_adapter",
-		"version": "0.0.3",
+		"version": "0.0.2",
 		"news": {
 			"0.0.3": {
 				"en": "Optaining Token is easy now. Handling TV on / off state imporved"
+			},
+			"0.0.2": {
+				"en": "Filler ;)"
 			},
 			"0.0.1": {
 				"en": "initial release",
