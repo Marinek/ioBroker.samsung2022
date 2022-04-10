@@ -111,6 +111,11 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Martin Gasse) Nothing realyy changed ;)
+
 ### 0.0.3 (2022-04-10)
 
 -   (Martin Gasse) Optaining Token is easy now. Handling TV on / off state imporved
