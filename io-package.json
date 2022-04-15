@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "samsung_2022_tv_adapter",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "news": {
+      "0.2.1": {
+        "en": "added missing function to turn off the tv",
+        "de": "Fehlende Funktion zum Ausschalten des Fernsehers hinzugefügt",
+        "ru": "добавлена недостающая функция выключения телевизора",
+        "pt": "função ausente adicionada para desligar a tv",
+        "nl": "ontbrekende functie toegevoegd om de tv uit te zetten",
+        "fr": "ajout de la fonction manquante pour éteindre la télé",
+        "it": "aggiunta la funzione mancante per spegnere la tv",
+        "es": "Se agregó la función faltante para apagar la televisión.",
+        "pl": "dodano brakującą funkcję wyłączania telewizora",
+        "zh-cn": "添加了关闭电视的缺失功能"
+      },
       "0.2.0": {
         "en": "reduced the amount of automatically starting the TV. It will reduce unwillingly starting the TV.\nNew configuration: Remote Name - You may set the Name of the Remote.\nToken negotiation will now automatically repeat unil it is done. (Your TV has to be on for the setup)",
         "de": "reduziert die Menge der automatischen Start des Fernsehgeräts. Es wird das ungewollte Starten des Fernsehers reduzieren.\nNeue Konfiguration: Name der Fernbedienung - Sie können den Namen der Fernbedienung festlegen.\nDie Token-Aushandlung wird nun automatisch wiederholt, bis sie abgeschlossen ist. (Ihr Fernseher muss für die Einrichtung eingeschaltet sein)",
@@ -74,18 +86,6 @@
         "es": "dependencias actualizadas",
         "pl": "zaktualizowane zależności",
         "zh-cn": "更新的依赖项"
-      },
-      "0.0.4": {
-        "en": "Optaining Token is easy now. Handling TV on / off state imporved",
-        "de": "Token zu erhalten ist jetzt einfach. Handhabung des TV-Ein/Aus-Zustands verbessert",
-        "ru": "Получить токен теперь легко. Улучшена обработка состояния включения/выключения телевизора.",
-        "pt": "A obtenção do Token é fácil agora. Manipulação do estado ligado/desligado da TV importado",
-        "nl": "Het verkrijgen van Token is nu eenvoudig. Omgaan met tv aan / uit staat verbeterd",
-        "fr": "Optaining Token est facile maintenant. Gestion de l'état allumé / éteint de la télévision améliorée",
-        "it": "Ottenere il token è facile ora. Gestione dello stato di accensione/spegnimento della TV migliorata",
-        "es": "Optaining Token es fácil ahora. Manejo del estado de encendido/apagado de la TV mejorado",
-        "pl": "Uzyskanie tokena jest teraz łatwe. Ulepszona obsługa telewizora w stanie włączenia/wyłączenia",
-        "zh-cn": "现在选择令牌很容易。处理电视开/关状态改进"
       }
     },
     "title": "Samsung 2022 TV",
