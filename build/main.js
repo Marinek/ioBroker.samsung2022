@@ -152,13 +152,21 @@ class Samsung2022TvAdapter extends utils.Adapter {
         return;
       }
       this.control.isAvailable().then((value) => {
+        var _a;
         this.log.silly(`TV aviable: '${value}'`);
+        if (keyName === "on") {
+          if (!state.val) {
+            (_a = this.control) == null ? void 0 : _a.sendKey(import_samsung_tv_control.KEYS.KEY_POWER, function() {
+            });
+          }
+        }
       }).catch((error) => {
+        var _a;
         this.log.silly("TV seems to be offline" + error);
         if (keyName === "on") {
-          if (this.control && state.val) {
+          if (state.val) {
             this.log.info("Sending WOL to wake up the TV.");
-            this.control.turnOn();
+            (_a = this.control) == null ? void 0 : _a.turnOn();
           }
         } else {
           this.log.silly("TV is offline, doing nothing.");
@@ -167,11 +175,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
       this.control.isAvailable().then(() => {
         var _a, _b;
         const enumKeyName = import_samsung_tv_control.KEYS[keyName];
-        (_a = this.control) == null ? void 0 : _a.sendKey(enumKeyName, function(err, res) {
-          if (err) {
-          } else {
-            console.log(res);
-          }
+        (_a = this.control) == null ? void 0 : _a.sendKey(enumKeyName, function() {
         });
         (_b = this.control) == null ? void 0 : _b.closeConnection();
       }).catch((e) => this.log.error(e));
