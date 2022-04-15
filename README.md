@@ -111,6 +111,11 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   added missing function to turn off the tv
+
 ### 0.2.0 (2022-04-10)
 
 -   reduced the amount of automatically starting the TV. It will reduce unwillingly starting the TV.

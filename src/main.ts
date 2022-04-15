@@ -201,13 +201,22 @@ class Samsung2022TvAdapter extends utils.Adapter {
 				.isAvailable()
 				.then((value) => {
 					this.log.silly(`TV aviable: '${value}'`);
+
+					// Handle shutdown TV on purpuse
+					if (keyName === "on") {
+						if (!state.val) {
+							this.control?.sendKey(KEYS.KEY_POWER, function () {
+								// Executed ;)
+							});
+						}
+					}
 				})
 				.catch((error) => {
 					this.log.silly("TV seems to be offline" + error);
 					if (keyName === "on") {
-						if (this.control && state.val) {
+						if (state.val) {
 							this.log.info("Sending WOL to wake up the TV.");
-							this.control.turnOn();
+							this.control?.turnOn();
 						}
 					} else {
 						this.log.silly("TV is offline, doing nothing.");
@@ -220,12 +229,8 @@ class Samsung2022TvAdapter extends utils.Adapter {
 					const enumKeyName: KEYS = KEYS[keyName as keyof typeof KEYS];
 
 					// Send key to TV
-					this.control?.sendKey(enumKeyName, function (err, res) {
-						if (err) {
-							//throw new Error();
-						} else {
-							console.log(res);
-						}
+					this.control?.sendKey(enumKeyName, function () {
+						// Executed ;)
 					});
 
 					// Control will keep connection for next messages in 1 minute
