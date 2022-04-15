@@ -1,5 +1,5 @@
 {
-	"samsung_2022_tv_adapter adapter settings": "Adapter settings for samsung_2022_tv_adapter",
+	"samsung adapter settings": "Adapter settings for samsung",
 	"IP": "IP adress of the samsung tv",
 	"MAC": "MAC adress of the samsung tv",
 	"TOKEN": "Token for this Installation - The Token is obtained on first start of the adapter.",

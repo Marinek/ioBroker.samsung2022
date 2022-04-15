@@ -1,7 +1,7 @@
 {
 	"expert": "yes",
 	"cli": false,
-	"adapterName": "samsung_2022_tv_adapter",
+	"adapterName": "samsung",
 	"title": "Samsung 2022 TV",
 	"description": "An new adapter for samsung tv",
 	"keywords": ["samsung", "tv", "remote"],
