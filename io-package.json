@@ -118,7 +118,7 @@
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
 		"main": "build/main.js",
-		"icon": "samsung_2022_tv_adapter.jpg",
+		"icon": "admin/samsung_2022_tv_adapter.jpg",
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/Marinek/ioBroker.samsung/main/admin/samsung_2022_tv_adapter.jpg",
 		"readme": "https://github.com/Marinek/ioBroker.samsung/blob/main/README.md",
