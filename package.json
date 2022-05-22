@@ -1,5 +1,5 @@
 {
-  "name": "iobroker.samsung",
+  "name": "iobroker.samsung2022",
   "version": "0.2.2",
   "description": "An new adapter for samsung tv",
   "author": {
@@ -17,7 +17,7 @@
       "name": "Björn Bonke"
     }
   ],
-  "homepage": "https://github.com/Marinek/ioBroker.samsung",
+  "homepage": "https://github.com/Marinek/ioBroker.samsung2022",
   "license": "MIT",
   "keywords": [
     "samsung",
@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Marinek/ioBroker.samsung"
+    "url": "https://github.com/Marinek/ioBroker.samsung2022"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.0",

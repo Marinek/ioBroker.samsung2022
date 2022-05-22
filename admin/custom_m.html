@@ -21,7 +21,7 @@
 </script>
 
 <script type="text/javascript">
-	$.get("adapter/samsung/words.js", function (script) {
+	$.get("adapter/samsung2022/words.js", function (script) {
 		let translation = script.substring(script.indexOf("{"), script.length);
 		translation = translation.substring(0, translation.lastIndexOf(";"));
 		$.extend(systemDictionary, JSON.parse(translation));
@@ -32,7 +32,7 @@
 	// - with function in global variable "defaults". Function name is equal with adapter name.
 	//   as input function receives object with all information concerning it
 	if (typeof defaults !== "undefined") {
-		defaults["samsung"] = function (obj, instanceObj) {
+		defaults["samsung2022"] = function (obj, instanceObj) {
 			return {
 				enabled: false,
 				interval: "5m",

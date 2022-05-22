@@ -1,13 +1,13 @@
 # ioBroker Samsung 2022 TV adapter
 
-[![NPM version](https://img.shields.io/npm/v/iobroker.samsung.svg)](https://www.npmjs.com/package/iobroker.samsung)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.samsung.svg)](https://www.npmjs.com/package/iobroker.samsung)
-![Number of Installations](https://iobroker.live/badges/samsung-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/samsung-stable.svg)
+[![NPM version](https://img.shields.io/npm/v/iobroker.samsung2022.svg)](https://www.npmjs.com/package/iobroker.samsung2022)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.samsung2022.svg)](https://www.npmjs.com/package/iobroker.samsung)
+![Number of Installations](https://iobroker.live/badges/samsung2022-installed.svg)
+![Current version in stable repository](https://iobroker.live/badges/samsung2022-stable.svg)
 
-[![NPM](https://nodei.co/npm/iobroker.samsung.png?downloads=true)](https://nodei.co/npm/iobroker.samsung/)
+[![NPM](https://nodei.co/npm/iobroker.samsung2022.png?downloads=true)](https://nodei.co/npm/iobroker.samsung2022/)
 
-**Tests:** ![Test and Release](https://github.com/Marinek/ioBroker.samsung/workflows/Test%20and%20Release/badge.svg)
+**Tests:** ![Test and Release](https://github.com/Marinek/ioBroker.samsung2022/workflows/Test%20and%20Release/badge.svg)
 
 ## Samsung 2022 TV adapter for ioBroker
 
@@ -39,7 +39,7 @@ You are almost done, only a few steps left:
 1. Clone the repository from GitHub to a directory on your PC:
 
     ```bash
-    git clone https://github.com/Marinek/ioBroker.samsung
+    git clone https://github.com/Marinek/ioBroker.samsung2022
     ```
 
 1. Head over to [src/main.ts](src/main.ts) and start programming!
@@ -126,6 +126,9 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
 ### 0.2.2 (2022-04-19)
 
 -   renamed this adapter to suite the naming conventions
