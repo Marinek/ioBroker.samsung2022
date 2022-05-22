@@ -1,168 +1,174 @@
 {
-	"common": {
-		"name": "samsung2022",
-		"version": "0.2.3",
-		"news": {
-			"0.2.3": {
-				"en": "renamed this adapter to suite the naming conventions",
-				"de": "diesen Adapter umbenannt, um den Namenskonventionen zu entsprechen",
-				"ru": "переименовал этот адаптер в соответствии с соглашениями об именах",
-				"pt": "renomeou este adaptador para atender às convenções de nomenclatura",
-				"nl": "hernoemde deze adapter om de naamgevingsconventies aan te passen",
-				"fr": "renommé cet adaptateur pour respecter les conventions de dénomination",
-				"it": "rinominato questo adattatore per adattarsi alle convenzioni di denominazione",
-				"es": "cambió el nombre de este adaptador para adaptarse a las convenciones de nomenclatura",
-				"pl": "zmieniono nazwę tego adaptera na zgodność z konwencjami nazewnictwa",
-				"zh-cn": "重命名此适配器以适应命名约定"
-			},
-			"0.2.2": {
-				"en": "renamed this adapter to suite the naming conventions",
-				"de": "diesen Adapter umbenannt, um den Namenskonventionen zu entsprechen",
-				"ru": "переименовал этот адаптер в соответствии с соглашениями об именах",
-				"pt": "renomeou este adaptador para atender às convenções de nomenclatura",
-				"nl": "hernoemde deze adapter om de naamgevingsconventies aan te passen",
-				"fr": "renommé cet adaptateur pour respecter les conventions de dénomination",
-				"it": "rinominato questo adattatore per adattarsi alle convenzioni di denominazione",
-				"es": "cambió el nombre de este adaptador para adaptarse a las convenciones de nomenclatura",
-				"pl": "zmieniono nazwę tego adaptera na zgodność z konwencjami nazewnictwa",
-				"zh-cn": "重命名此适配器以适应命名约定"
-			},
-			"0.2.1": {
-				"en": "added missing function to turn off the tv",
-				"de": "Fehlende Funktion zum Ausschalten des Fernsehers hinzugefügt",
-				"ru": "добавлена недостающая функция выключения телевизора",
-				"pt": "função ausente adicionada para desligar a tv",
-				"nl": "ontbrekende functie toegevoegd om de tv uit te zetten",
-				"fr": "ajout de la fonction manquante pour éteindre la télé",
-				"it": "aggiunta la funzione mancante per spegnere la tv",
-				"es": "Se agregó la función faltante para apagar la televisión.",
-				"pl": "dodano brakującą funkcję wyłączania telewizora",
-				"zh-cn": "添加了关闭电视的缺失功能"
-			},
-			"0.2.0": {
-				"en": "reduced the amount of automatically starting the TV. It will reduce unwillingly starting the TV.\nNew configuration: Remote Name - You may set the Name of the Remote.\nToken negotiation will now automatically repeat unil it is done. (Your TV has to be on for the setup)",
-				"de": "reduziert die Menge der automatischen Start des Fernsehgeräts. Es wird das ungewollte Starten des Fernsehers reduzieren.\nNeue Konfiguration: Name der Fernbedienung - Sie können den Namen der Fernbedienung festlegen.\nDie Token-Aushandlung wird nun automatisch wiederholt, bis sie abgeschlossen ist. (Ihr Fernseher muss für die Einrichtung eingeschaltet sein)",
-				"ru": "уменьшено количество автоматически запускаемых телевизоров. Это уменьшит невольное включение телевизора.\nНовая конфигурация: Имя удаленного устройства — вы можете установить имя удаленного устройства.\nСогласование токена теперь будет автоматически повторяться до тех пор, пока оно не будет выполнено. (Ваш телевизор должен быть включен для настройки)",
-				"pt": "reduziu a quantidade de iniciar automaticamente a TV. Ele irá reduzir involuntariamente iniciar a TV.\nNova configuração: Nome do Remoto - Você pode definir o Nome do Remoto.\nA negociação de token agora se repetirá automaticamente até que seja concluída. (Sua TV deve estar ligada para a configuração)",
-				"nl": "de hoeveelheid automatisch starten van de tv verminderd. Het zal het ongewild starten van de tv verminderen.\nNieuwe configuratie: Remote Name - U kunt de naam van de Remote instellen.\nToken-onderhandeling wordt nu automatisch herhaald totdat het klaar is. (Je tv moet aan staan voor de installatie)",
-				"fr": "réduit la quantité de démarrage automatique du téléviseur. Cela réduira le démarrage involontaire du téléviseur.\nNouvelle configuration : Nom de la télécommande - Vous pouvez définir le nom de la télécommande.\nLa négociation de jeton se répétera désormais automatiquement jusqu'à ce qu'elle soit terminée. (Votre téléviseur doit être allumé pour la configuration)",
-				"it": "ridotto la quantità di avvio automatico della TV. Si ridurrà avviando involontariamente la TV.\nNuova configurazione: Nome Remoto - È possibile impostare il Nome del Remoto.\nLa negoziazione del token ora si ripeterà automaticamente finché non sarà completata. (La tua TV deve essere accesa per la configurazione)",
-				"es": "redujo la cantidad de encendido automático del televisor. Reducirá el encendido involuntario del televisor.\nNueva configuración: Nombre remoto: puede configurar el Nombre del control remoto.\nLa negociación de token ahora se repetirá automáticamente hasta que finalice. (Tu televisor debe estar encendido para la configuración)",
-				"pl": "zmniejszono ilość automatycznego uruchamiania telewizora. Zmniejszy to niechciane uruchamianie telewizora.\nNowa konfiguracja: Nazwa pilota - Możesz ustawić Nazwę pilota.\nNegocjacja tokenów będzie teraz automatycznie powtarzana, dopóki nie zostanie zakończona. (Twój telewizor musi być włączony podczas konfiguracji)",
-				"zh-cn": "减少了自动启动电视的次数。它将减少不情愿地启动电视。\n新配置：远程名称 - 您可以设置远程的名称。\n令牌协商现在将自动重复，直到完成。 （您的电视必须打开才能进行设置）"
-			},
-			"0.1.3": {
-				"en": "updated release process",
-				"de": "aktualisierter Freigabeprozess",
-				"ru": "обновленный процесс выпуска",
-				"pt": "processo de lançamento atualizado",
-				"nl": "bijgewerkt releaseproces",
-				"fr": "processus de publication mis à jour",
-				"it": "processo di rilascio aggiornato",
-				"es": "proceso de lanzamiento actualizado",
-				"pl": "zaktualizowany proces wydawania",
-				"zh-cn": "更新发布流程"
-			},
-			"0.1.2": {
-				"en": "updated release process",
-				"de": "aktualisierter Freigabeprozess",
-				"ru": "обновленный процесс выпуска",
-				"pt": "processo de lançamento atualizado",
-				"nl": "bijgewerkt releaseproces",
-				"fr": "processus de publication mis à jour",
-				"it": "processo di rilascio aggiornato",
-				"es": "proceso de lanzamiento actualizado",
-				"pl": "zaktualizowany proces wydawania",
-				"zh-cn": "更新发布流程"
-			},
-			"0.1.1": {
-				"en": "updated release process",
-				"de": "aktualisierter Freigabeprozess",
-				"ru": "обновленный процесс выпуска",
-				"pt": "processo de lançamento atualizado",
-				"nl": "bijgewerkt releaseproces",
-				"fr": "processus de publication mis à jour",
-				"it": "processo di rilascio aggiornato",
-				"es": "proceso de lanzamiento actualizado",
-				"pl": "zaktualizowany proces wydawania",
-				"zh-cn": "更新发布流程"
-			}
-		},
-		"title": "Samsung 2022 TV",
-		"titleLang": {
-			"en": "Samsung 2022 TV",
-			"de": "Samsung Fernseher 2022",
-			"ru": "телевизор самсунг 2022",
-			"pt": "TV Samsung 2022",
-			"nl": "Samsung 2022-tv",
-			"fr": "Téléviseur Samsung 2022",
-			"it": "TV Samsung 2022",
-			"es": "Televisor Samsung 2022",
-			"pl": "Telewizor Samsung 2022",
-			"zh-cn": "三星2022电视"
-		},
-		"desc": {
-			"en": "An new adapter for samsung tv",
-			"de": "Ein neuer Adapter für Samsung TV",
-			"ru": "Новый адаптер для телевизора самсунг.",
-			"pt": "Um novo adaptador para tv samsung",
-			"nl": "Een nieuwe adapter voor Samsung TV",
-			"fr": "Un nouvel adaptateur pour Samsung TV",
-			"it": "Un nuovo adattatore per tv samsung",
-			"es": "Un nuevo adaptador para samsung tv",
-			"pl": "Nowy adapter do telewizora Samsung",
-			"zh-cn": "三星电视的新适配器"
-		},
-		"authors": ["Martin Gasse <martin.gasse@gmail.com>"],
-		"keywords": ["samsung", "tv", "remote"],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "build/main.js",
-		"icon": "admin/samsung_2022_tv_adapter.jpg",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/Marinek/ioBroker.samsung2022/main/admin/samsung2022.jpg",
-		"readme": "https://github.com/Marinek/ioBroker.samsung2022/blob/main/README.md",
-		"loglevel": "info",
-		"mode": "daemon",
-		"type": "multimedia",
-		"compact": true,
-		"connectionType": "local",
-		"dataSource": "poll",
-		"materialize": true,
-		"supportCustoms": true,
-		"dependencies": [
-			{
-				"js-controller": ">=2.0.0"
-			}
-		]
-	},
-	"native": {
-		"IP": "192.168.1.0",
-		"MAC": "54:3A:D6:DD:F7:78",
-		"REMOTE_NAME": "Adapter Remote"
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": "Information"
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.connection",
-			"type": "state",
-			"common": {
-				"role": "indicator.connected",
-				"name": "Device or service connected",
-				"type": "boolean",
-				"read": true,
-				"write": false,
-				"def": false
-			},
-			"native": {}
-		}
-	]
+  "common": {
+    "name": "samsung2022",
+    "version": "0.2.4",
+    "news": {
+      "0.2.4": {
+        "en": "renamed this adapter to suite the naming conventions",
+        "de": "diesen Adapter umbenannt, um den Namenskonventionen zu entsprechen",
+        "ru": "переименовал этот адаптер в соответствии с соглашениями об именах",
+        "pt": "renomeou este adaptador para atender às convenções de nomenclatura",
+        "nl": "hernoemde deze adapter om de naamgevingsconventies aan te passen",
+        "fr": "renommé cet adaptateur pour respecter les conventions de dénomination",
+        "it": "rinominato questo adattatore per adattarsi alle convenzioni di denominazione",
+        "es": "cambió el nombre de este adaptador para adaptarse a las convenciones de nomenclatura",
+        "pl": "zmieniono nazwę tego adaptera na zgodność z konwencjami nazewnictwa",
+        "zh-cn": "重命名此适配器以适应命名约定"
+      },
+      "0.2.3": {
+        "en": "renamed this adapter to suite the naming conventions",
+        "de": "diesen Adapter umbenannt, um den Namenskonventionen zu entsprechen",
+        "ru": "переименовал этот адаптер в соответствии с соглашениями об именах",
+        "pt": "renomeou este adaptador para atender às convenções de nomenclatura",
+        "nl": "hernoemde deze adapter om de naamgevingsconventies aan te passen",
+        "fr": "renommé cet adaptateur pour respecter les conventions de dénomination",
+        "it": "rinominato questo adattatore per adattarsi alle convenzioni di denominazione",
+        "es": "cambió el nombre de este adaptador para adaptarse a las convenciones de nomenclatura",
+        "pl": "zmieniono nazwę tego adaptera na zgodność z konwencjami nazewnictwa",
+        "zh-cn": "重命名此适配器以适应命名约定"
+      },
+      "0.2.2": {
+        "en": "renamed this adapter to suite the naming conventions",
+        "de": "diesen Adapter umbenannt, um den Namenskonventionen zu entsprechen",
+        "ru": "переименовал этот адаптер в соответствии с соглашениями об именах",
+        "pt": "renomeou este adaptador para atender às convenções de nomenclatura",
+        "nl": "hernoemde deze adapter om de naamgevingsconventies aan te passen",
+        "fr": "renommé cet adaptateur pour respecter les conventions de dénomination",
+        "it": "rinominato questo adattatore per adattarsi alle convenzioni di denominazione",
+        "es": "cambió el nombre de este adaptador para adaptarse a las convenciones de nomenclatura",
+        "pl": "zmieniono nazwę tego adaptera na zgodność z konwencjami nazewnictwa",
+        "zh-cn": "重命名此适配器以适应命名约定"
+      },
+      "0.2.1": {
+        "en": "added missing function to turn off the tv",
+        "de": "Fehlende Funktion zum Ausschalten des Fernsehers hinzugefügt",
+        "ru": "добавлена недостающая функция выключения телевизора",
+        "pt": "função ausente adicionada para desligar a tv",
+        "nl": "ontbrekende functie toegevoegd om de tv uit te zetten",
+        "fr": "ajout de la fonction manquante pour éteindre la télé",
+        "it": "aggiunta la funzione mancante per spegnere la tv",
+        "es": "Se agregó la función faltante para apagar la televisión.",
+        "pl": "dodano brakującą funkcję wyłączania telewizora",
+        "zh-cn": "添加了关闭电视的缺失功能"
+      },
+      "0.2.0": {
+        "en": "reduced the amount of automatically starting the TV. It will reduce unwillingly starting the TV.\nNew configuration: Remote Name - You may set the Name of the Remote.\nToken negotiation will now automatically repeat unil it is done. (Your TV has to be on for the setup)",
+        "de": "reduziert die Menge der automatischen Start des Fernsehgeräts. Es wird das ungewollte Starten des Fernsehers reduzieren.\nNeue Konfiguration: Name der Fernbedienung - Sie können den Namen der Fernbedienung festlegen.\nDie Token-Aushandlung wird nun automatisch wiederholt, bis sie abgeschlossen ist. (Ihr Fernseher muss für die Einrichtung eingeschaltet sein)",
+        "ru": "уменьшено количество автоматически запускаемых телевизоров. Это уменьшит невольное включение телевизора.\nНовая конфигурация: Имя удаленного устройства — вы можете установить имя удаленного устройства.\nСогласование токена теперь будет автоматически повторяться до тех пор, пока оно не будет выполнено. (Ваш телевизор должен быть включен для настройки)",
+        "pt": "reduziu a quantidade de iniciar automaticamente a TV. Ele irá reduzir involuntariamente iniciar a TV.\nNova configuração: Nome do Remoto - Você pode definir o Nome do Remoto.\nA negociação de token agora se repetirá automaticamente até que seja concluída. (Sua TV deve estar ligada para a configuração)",
+        "nl": "de hoeveelheid automatisch starten van de tv verminderd. Het zal het ongewild starten van de tv verminderen.\nNieuwe configuratie: Remote Name - U kunt de naam van de Remote instellen.\nToken-onderhandeling wordt nu automatisch herhaald totdat het klaar is. (Je tv moet aan staan voor de installatie)",
+        "fr": "réduit la quantité de démarrage automatique du téléviseur. Cela réduira le démarrage involontaire du téléviseur.\nNouvelle configuration : Nom de la télécommande - Vous pouvez définir le nom de la télécommande.\nLa négociation de jeton se répétera désormais automatiquement jusqu'à ce qu'elle soit terminée. (Votre téléviseur doit être allumé pour la configuration)",
+        "it": "ridotto la quantità di avvio automatico della TV. Si ridurrà avviando involontariamente la TV.\nNuova configurazione: Nome Remoto - È possibile impostare il Nome del Remoto.\nLa negoziazione del token ora si ripeterà automaticamente finché non sarà completata. (La tua TV deve essere accesa per la configurazione)",
+        "es": "redujo la cantidad de encendido automático del televisor. Reducirá el encendido involuntario del televisor.\nNueva configuración: Nombre remoto: puede configurar el Nombre del control remoto.\nLa negociación de token ahora se repetirá automáticamente hasta que finalice. (Tu televisor debe estar encendido para la configuración)",
+        "pl": "zmniejszono ilość automatycznego uruchamiania telewizora. Zmniejszy to niechciane uruchamianie telewizora.\nNowa konfiguracja: Nazwa pilota - Możesz ustawić Nazwę pilota.\nNegocjacja tokenów będzie teraz automatycznie powtarzana, dopóki nie zostanie zakończona. (Twój telewizor musi być włączony podczas konfiguracji)",
+        "zh-cn": "减少了自动启动电视的次数。它将减少不情愿地启动电视。\n新配置：远程名称 - 您可以设置远程的名称。\n令牌协商现在将自动重复，直到完成。 （您的电视必须打开才能进行设置）"
+      },
+      "0.1.3": {
+        "en": "updated release process",
+        "de": "aktualisierter Freigabeprozess",
+        "ru": "обновленный процесс выпуска",
+        "pt": "processo de lançamento atualizado",
+        "nl": "bijgewerkt releaseproces",
+        "fr": "processus de publication mis à jour",
+        "it": "processo di rilascio aggiornato",
+        "es": "proceso de lanzamiento actualizado",
+        "pl": "zaktualizowany proces wydawania",
+        "zh-cn": "更新发布流程"
+      },
+      "0.1.2": {
+        "en": "updated release process",
+        "de": "aktualisierter Freigabeprozess",
+        "ru": "обновленный процесс выпуска",
+        "pt": "processo de lançamento atualizado",
+        "nl": "bijgewerkt releaseproces",
+        "fr": "processus de publication mis à jour",
+        "it": "processo di rilascio aggiornato",
+        "es": "proceso de lanzamiento actualizado",
+        "pl": "zaktualizowany proces wydawania",
+        "zh-cn": "更新发布流程"
+      }
+    },
+    "title": "Samsung 2022 TV",
+    "titleLang": {
+      "en": "Samsung 2022 TV",
+      "de": "Samsung Fernseher 2022",
+      "ru": "телевизор самсунг 2022",
+      "pt": "TV Samsung 2022",
+      "nl": "Samsung 2022-tv",
+      "fr": "Téléviseur Samsung 2022",
+      "it": "TV Samsung 2022",
+      "es": "Televisor Samsung 2022",
+      "pl": "Telewizor Samsung 2022",
+      "zh-cn": "三星2022电视"
+    },
+    "desc": {
+      "en": "An new adapter for samsung tv",
+      "de": "Ein neuer Adapter für Samsung TV",
+      "ru": "Новый адаптер для телевизора самсунг.",
+      "pt": "Um novo adaptador para tv samsung",
+      "nl": "Een nieuwe adapter voor Samsung TV",
+      "fr": "Un nouvel adaptateur pour Samsung TV",
+      "it": "Un nuovo adattatore per tv samsung",
+      "es": "Un nuevo adaptador para samsung tv",
+      "pl": "Nowy adapter do telewizora Samsung",
+      "zh-cn": "三星电视的新适配器"
+    },
+    "authors": [
+      "Martin Gasse <martin.gasse@gmail.com>"
+    ],
+    "keywords": [
+      "samsung",
+      "tv",
+      "remote"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "build/main.js",
+    "icon": "admin/samsung_2022_tv_adapter.jpg",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Marinek/ioBroker.samsung2022/main/admin/samsung2022.jpg",
+    "readme": "https://github.com/Marinek/ioBroker.samsung2022/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "multimedia",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "materialize": true,
+    "supportCustoms": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ]
+  },
+  "native": {
+    "IP": "192.168.1.0",
+    "MAC": "54:3A:D6:DD:F7:78",
+    "REMOTE_NAME": "Adapter Remote"
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }
