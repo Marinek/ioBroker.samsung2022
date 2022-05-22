@@ -129,8 +129,6 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
-### 0.2.2 (2022-04-19)
-
 -   renamed this adapter to suite the naming conventions
 
 ### 0.2.1 (2022-04-14)
