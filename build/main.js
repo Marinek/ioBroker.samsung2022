@@ -36,7 +36,7 @@ const STATE_NAME_INFO_CONNECTION = "info.connection";
 class Samsung2022TvAdapter extends utils.Adapter {
   constructor(options = {}) {
     super(__spreadProps(__spreadValues({}, options), {
-      name: "samsung"
+      name: "samsung2022"
     }));
     this.refreshIntervalInMinutes = 1;
     this.on("ready", this.onReady.bind(this));

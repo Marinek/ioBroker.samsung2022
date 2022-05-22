@@ -11,7 +11,7 @@ function build(): void {
 	ReactDOM.render(
 		<MuiThemeProvider theme={theme(themeName)}>
 			<App
-				adapterName="samsung"
+				adapterName="samsung2022"
 				onThemeChange={(_theme) => {
 					themeName = _theme;
 					build();

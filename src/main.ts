@@ -19,7 +19,7 @@ class Samsung2022TvAdapter extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
-			name: "samsung",
+			name: "samsung2022",
 		});
 		this.on("ready", this.onReady.bind(this));
 		this.on("stateChange", this.onStateChange.bind(this));
