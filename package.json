@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.0",
-    "samsung-tv-control": "^1.12.3",
+    "samsung-tv-control": "^1.13.0",
     "wol": "^1.0.7"
   },
   "devDependencies": {
